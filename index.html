@@ -73,6 +73,29 @@ label.ck{display:flex;gap:8px;align-items:center;text-transform:none;font-size:1
 .ov{display:block;position:fixed;inset:0;background:rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:opacity .25s;z-index:60}
 #nav.open .ov{opacity:1;pointer-events:auto}
 }
+
+/* ---- Notulensi: alur 4 langkah ---- */
+.nt{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:4px 24px;margin-top:8px;align-items:start}
+.nt textarea{min-height:230px}
+.stp{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:var(--mut);text-transform:uppercase;letter-spacing:.4px;margin:6px 0 4px}
+.stp i{font-style:normal;display:inline-flex;align-items:center;justify-content:center;flex:none;width:22px;height:22px;border-radius:50%;background:var(--g);color:#fff;font-size:12px}
+.rbar{display:flex;align-items:center;gap:10px;margin:4px 0 2px}
+.rbar button.b{margin:0}
+button.b.rec{background:#dc2626}
+.rdot{display:none;width:10px;height:10px;border-radius:50%;background:#ef4444;animation:rpl 1s infinite}
+.rbar b{font-variant-numeric:tabular-nums;color:var(--mut)}
+@keyframes rpl{50%{opacity:.25}}
+.acts{display:flex;gap:8px;flex-wrap:wrap}.acts button.b{margin:0}
+.wa{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}.wa button.b{margin:0}
+.ntw{border-top:1px solid var(--bd);margin-top:18px;padding-top:12px}
+@media(max-width:899px){
+.nt{grid-template-columns:minmax(0,1fr)}
+.nt textarea{min-height:200px}
+.rbar button.b{flex:1}
+#gb{width:100%;margin:0}
+.acts{flex-direction:column-reverse}.acts button.b{width:100%}
+.wa button.b{flex:1 1 calc(50% - 8px)}
+}
 label{font-size:12px;font-weight:700;color:var(--mut);text-transform:uppercase;letter-spacing:.4px}
 input,select,textarea{width:100%;padding:12px;border:1.5px solid var(--bd);border-radius:14px;background:var(--bg);color:var(--tx);font:inherit;margin:4px 0 12px}
 input:focus,select:focus,textarea:focus{outline:2px solid var(--ac);outline-offset:1px}
@@ -317,30 +340,50 @@ async function delM(id){if(armDel!==id){armDel=id;return render(true)}armDel=nul
 const openNote=id=>{sel=id;render(true);setTimeout(()=>$('#nc')&&$('#nc').scrollIntoView(),50)};
 function noteCard(m){
   return `<div class="card" id="nc"><h2>🎙️ Notulensi: ${esc(m.title)}</h2>
-  <p class="mut">Tekan Rekam saat rapat berlangsung; suara diubah jadi teks Bahasa Indonesia. Transkrip juga bisa ditempel manual.</p>
-  <div class="c2"><div><button class="b" id="rb" onclick="toggleRec()">● Mulai rekam</button>
-  <label>Transkrip rapat</label><textarea id="tr">${esc(m.transcript)}</textarea><button class="b" id="gb" onclick="gen()">✨ Buat ringkasan AI</button></div>
-  <div><label>Notulensi &amp; kesimpulan (boleh diedit)</label><textarea id="sm" style="min-height:240px">${esc(m.summary)}</textarea>
-  <button class="s b" onclick="saveNote(false)">Simpan draf</button><button class="b" onclick="saveNote(true)">Simpan &amp; kirim ke peserta</button></div></div>
-  <div style="margin-top:10px">${waList(m.id)}</div><div id="st"></div></div>`;
+  <p class="mut">Ikuti 4 langkah: rekam atau tempel transkrip, buat ringkasan AI, periksa hasilnya, lalu simpan dan kirim.</p>
+  <div class="nt">
+    <div>
+      <div class="stp"><i>1</i><span>Rekam atau tempel transkrip</span></div>
+      <div class="rbar"><button class="b ${recording?'rec':''}" id="rb" onclick="toggleRec()">${recording?'■ Berhenti rekam':'● Mulai rekam'}</button><span class="rdot" id="rd" style="display:${recording?'inline-block':'none'}"></span><b id="rt">${recording?fmtT(recT):''}</b></div>
+      <textarea id="tr" placeholder="Transkrip rapat muncul di sini, atau tempel manual…">${esc(m.transcript)}</textarea>
+      <div class="stp"><i>2</i><span>Buat ringkasan</span></div>
+      <button class="b" id="gb" onclick="gen()">✨ Buat ringkasan AI</button>
+    </div>
+    <div>
+      <div class="stp"><i>3</i><span>Periksa &amp; edit notulensi</span></div>
+      <textarea id="sm" placeholder="Hasil ringkasan AI muncul di sini. Boleh diedit.">${esc(m.summary)}</textarea>
+      <div class="stp"><i>4</i><span>Simpan &amp; kirim</span></div>
+      <div class="acts"><button class="s b" onclick="saveNote(false)">Simpan draf</button><button class="b" onclick="saveNote(true)">Simpan &amp; kirim ke peserta</button></div>
+    </div>
+  </div>
+  <div class="ntw">${waList(m.id)}</div><div id="st"></div></div>`;
+}
+let recT=0,recI=null;
+const fmtT=s=>String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');
+function recUI(on){
+  const b=$('#rb'),d=$('#rd'),t=$('#rt');
+  if(b){b.classList.toggle('rec',on);b.textContent=on?'■ Berhenti rekam':'● Mulai rekam'}
+  if(d)d.style.display=on?'inline-block':'none';
+  if(t)t.textContent=on?fmtT(recT):'';
+  clearInterval(recI);
+  if(on)recI=setInterval(()=>{recT++;const t2=$('#rt');if(t2)t2.textContent=fmtT(recT)},1000);
 }
 function toggleRec(){
   const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
   if(!SR)return msg('Browser ini tidak mendukung rekam suara. Pakai Chrome, atau tempel transkrip manual.','e');
-  const b=$('#rb');
-  if(recording){recording=false;rec.stop();b.textContent='● Mulai rekam';return msg('Rekaman dihentikan.','o')}
+  if(recording){recording=false;rec.stop();recUI(false);return msg('Rekaman dihentikan.','o')}
   rec=new SR();rec.lang='id-ID';rec.continuous=true;rec.interimResults=false;
   rec.onresult=e=>{const t=$('#tr');if(!t)return;for(let i=e.resultIndex;i<e.results.length;i++)if(e.results[i].isFinal)t.value+=(t.value&&!/\s$/.test(t.value)?' ':'')+e.results[i][0].transcript};
   rec.onend=()=>{if(recording)try{rec.start()}catch(e){}};
-  rec.onerror=e=>{if(e.error==='not-allowed'||e.error==='service-not-allowed'){recording=false;const b=$('#rb');if(b)b.textContent='● Mulai rekam';msg('Akses mikrofon ditolak.','e')}};
-  try{rec.start();recording=true;b.textContent='■ Berhenti rekam';msg('Sedang merekam…')}catch(e){msg('Gagal memulai rekam.','e')}
+  rec.onerror=e=>{if(e.error==='not-allowed'||e.error==='service-not-allowed'){recording=false;recUI(false);msg('Akses mikrofon ditolak.','e')}};
+  try{rec.start();recording=true;recT=0;recUI(true);msg('Sedang merekam…')}catch(e){msg('Gagal memulai rekam.','e')}
 }
 async function gen(){
   const t=$('#tr').value.trim();if(t.length<30)return msg('Transkrip terlalu pendek.','e');
-  const b=$('#gb');b.disabled=true;msg('AI sedang menyusun notulensi… (bisa sampai 1 menit)');
+  const b=$('#gb');b.disabled=true;b.textContent='⏳ Memproses…';msg('AI sedang menyusun notulensi… (bisa sampai 1 menit)');
   try{const s=await adm('generateSummary',sel,t);const e=$('#sm');if(e)e.value=s;msg('Ringkasan selesai. Periksa dan edit bila perlu.','o')}
   catch(e){msg('AI gagal: '+esc(errMsg(e)),'e')}
-  const b2=$('#gb');if(b2)b2.disabled=false;
+  const b2=$('#gb');if(b2){b2.disabled=false;b2.textContent='✨ Buat ringkasan AI'}
 }
 async function saveNote(pub){
   const d={transcript:$('#tr').value,summary:$('#sm').value};
@@ -352,7 +395,7 @@ async function saveNote(pub){
     msg(o&&o.waAuto?`Notulensi terbit. WhatsApp otomatis: ${o.sent} terkirim, ${o.failed} gagal.`:'Notulensi terkirim ke peserta (tampil di halaman mereka). Kirim lewat WhatsApp dengan tombol di bawah.','o');
   }catch(e){msg('Gagal: '+esc(errMsg(e)),'e')}
 }
-const waList=id=>{const l=atts.filter(a=>a.meetingId===id&&a.phone);return `<label>Kirim lewat WhatsApp (${l.length} peserta punya nomor)</label><br>`+l.map(a=>`<button class="s b" onclick="waSend('${a.id}')">💬 ${esc(a.name)}</button>`).join('')};
+const waList=id=>{const l=atts.filter(a=>a.meetingId===id&&a.phone);return `<div class="stp"><i>💬</i><span>Kirim lewat WhatsApp (${l.length} peserta punya nomor)</span></div><div class="wa">`+(l.map(a=>`<button class="s b" onclick="waSend('${a.id}')">💬 ${esc(a.name)}</button>`).join('')||'<span class="mut">Belum ada peserta yang mengisi nomor WhatsApp.</span>')+'</div>'};
 function waSend(id){
   const a=atts.find(x=>x.id===id),m=meetings.find(x=>x.id===sel);if(!a||!m)return;
   let n=String(a.phone||'').replace(/\D/g,'');if(n.startsWith('0'))n='62'+n.slice(1);
