@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="utf-8">
@@ -53,6 +53,26 @@ label.ck{display:flex;gap:8px;align-items:center;text-transform:none;font-size:1
 .stat.hot{background:var(--lime);border-color:var(--lime);color:var(--limetx)}.stat.hot span{color:var(--limetx)}
 .cols{display:grid;grid-template-columns:minmax(340px,400px) minmax(0,1fr);gap:16px;align-items:start}
 @media(max-width:899px){.app.adm{display:block}#nav{flex-direction:row;overflow-x:auto;height:auto;position:static;padding:10px;border-right:0;border-bottom:1px solid var(--bd)}.brand{display:none}.app.adm #view{padding:16px}.cols{grid-template-columns:minmax(0,1fr)}#nav button{white-space:nowrap}}
+
+/* ---- Menu hamburger (mobile) ---- */
+.mbar,.ov{display:none}.mi{display:contents}
+@media(max-width:899px){
+#nav{position:sticky;top:0;z-index:50;flex-direction:row;align-items:center;overflow:visible;height:auto;padding:8px 14px;border-right:0;border-bottom:1px solid var(--bd)}
+.mbar{display:flex;align-items:center;gap:12px;width:100%}
+.mbar b{flex:1;font-size:16px;font-weight:800;letter-spacing:-.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mbar img{width:34px;height:auto}
+#nav .hb{all:unset;cursor:pointer;box-sizing:border-box;width:44px;height:44px;border-radius:12px;border:1.5px solid var(--bd);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px}
+#nav .hb span{display:block;width:20px;height:2.5px;border-radius:2px;background:var(--tx);transition:transform .25s,opacity .2s}
+#nav.open .hb span:nth-child(1){transform:translateY(7.5px) rotate(45deg)}
+#nav.open .hb span:nth-child(2){opacity:0}
+#nav.open .hb span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg)}
+.mi{display:flex;flex-direction:column;gap:6px;position:fixed;top:0;left:0;bottom:0;width:80%;max-width:300px;padding:18px 14px;background:var(--card);border-right:1px solid var(--bd);box-shadow:6px 0 24px rgba(0,0,0,.25);transform:translateX(-105%);transition:transform .28s ease;z-index:70;overflow-y:auto}
+#nav.open .mi{transform:none}
+.mi .brand{display:flex}
+.mi button{padding:14px 12px!important;font-size:15px}
+.ov{display:block;position:fixed;inset:0;background:rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:opacity .25s;z-index:60}
+#nav.open .ov{opacity:1;pointer-events:auto}
+}
 label{font-size:12px;font-weight:700;color:var(--mut);text-transform:uppercase;letter-spacing:.4px}
 input,select,textarea{width:100%;padding:12px;border:1.5px solid var(--bd);border-radius:14px;background:var(--bg);color:var(--tx);font:inherit;margin:4px 0 12px}
 input:focus,select:focus,textarea:focus{outline:2px solid var(--ac);outline-offset:1px}
@@ -114,7 +134,7 @@ async function load(force){
   }catch(e){if(!loaded){loadErr=errMsg(e);render(true)}}
 }
 const showLogin=()=>{loginOpen=true;render(true);scrollTo(0,0)};
-function logout(expired){pin='';ls.set('pin','');isAdmin=false;tab='';loginOpen=!!expired;lastSig='';load(true)}
+function logout(expired){menu(0);pin='';ls.set('pin','');isAdmin=false;tab='';loginOpen=!!expired;lastSig='';load(true)}
 function vLogin(){
   return `<div class="card"><h2>Masuk admin</h2><p class="mut">Masukkan PIN admin untuk membuka dashboard.</p>
   <label>PIN admin</label><input id="pn" type="password" inputmode="numeric" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
@@ -137,7 +157,9 @@ function render(f){
   if(!isAdmin)tab='absen';else if(!tab)tab='home';
   $('#app').className='app '+(isAdmin?'adm':'mob');
   const T=[['home','🏠 Dashboard'],['rapat','📅 Agenda rapat'],['hadir','✅ Kehadiran'],['qr','🔳 QR Code'],['absen','📱 Tampilan peserta']];
-  $('#nav').innerHTML=`<div class="brand"><img class="lg" src="${LOGO}" alt="GP Ansor"><div class="bt"><span>pimpinan cabang</span><em>GP Ansor</em><span>kabupaten bogor</span><small>absen rapat</small></div></div>`+(isAdmin?T.map(t=>`<button class="${t[0]===tab?'on':''}" onclick="go('${t[0]}')">${t[1]}</button>`).join('')+'<button onclick="logout()">🚪 Keluar admin</button>':'');
+  const BR=`<div class="brand"><img class="lg" src="${LOGO}" alt="GP Ansor"><div class="bt"><span>pimpinan cabang</span><em>GP Ansor</em><span>kabupaten bogor</span><small>absen rapat</small></div></div>`;
+  const cur=(T.find(t=>t[0]===tab)||T[0])[1].replace(/^\S+\s/,'');
+  $('#nav').innerHTML=isAdmin?`<div class="mbar"><button class="hb" aria-label="Buka menu" onclick="menu()"><span></span><span></span><span></span></button><b>${cur}</b><img src="${LOGO}" alt=""></div><div class="mi">${BR}`+T.map(t=>`<button class="${t[0]===tab?'on':''}" onclick="go('${t[0]}')">${t[1]}</button>`).join('')+`<button onclick="logout()">🚪 Keluar admin</button></div><div class="ov" onclick="menu(0)"></div>`:BR;
   $('#nav').style.cssText=isAdmin?'':'background:none;border:0;height:auto;position:static;padding:0'
   const v=$('#view');v.className=isAdmin&&tab==='absen'?'phone':'';
   if(!loaded)v.innerHTML=loadErr?`<div class="card">${esc(loadErr)}<br><br><button class="b" onclick="loadErr='';load(true)">Coba lagi</button></div>`:'<p class="mut">Memuat…</p>';
@@ -147,7 +169,9 @@ function render(f){
 const liveList=()=>{const n=Date.now();return meetings.filter(m=>m.start&&m.end&&n>=new Date(m.start)-18e5&&n<=+new Date(m.end))};
 
 document.addEventListener('focusout',()=>setTimeout(()=>{if(pending)render()},250));
-const go=t=>{tab=t;render(true);scrollTo(0,0)};
+const menu=o=>{const n=$('#nav');const open=o===undefined?!n.classList.contains('open'):!!o;n.classList.toggle('open',open);document.body.style.overflow=open?'hidden':''};
+addEventListener('keydown',e=>{if(e.key==='Escape')menu(0)});addEventListener('resize',()=>{if(innerWidth>=900)menu(0)});
+const go=t=>{menu(0);tab=t;render(true);scrollTo(0,0)};
 const msg=(t,k='')=>{const e=$('#st');if(e)e.innerHTML=t?`<div class="msg ${k}">${t}</div>`:''};
 
 /* ---------- Dashboard admin ---------- */
