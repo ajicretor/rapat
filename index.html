@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="utf-8">
@@ -92,7 +92,7 @@ if(!uid){uid='u'+Math.random().toString(36).slice(2,10)+Date.now().toString(36);
 
 /* ---------- Penghubung ke server (Apps Script) ---------- */
 const errMsg=e=>String((e&&e.message)||e||'Terjadi kesalahan').replace(/^Error:\s*/,'');
-const API_URL='https://script.google.com/macros/s/AKfycbzOq-dyEuIOITEnMjsTH--sqrSTftxyZys59zAfUHb3z6FJ1vNtl1w32bKmPC2sxan79A/exec'; // URL web app Apps Script (berakhiran /exec)
+const API_URL='https://script.google.com/macros/s/AKfycbxxjTLn6MNwt9VkMknAxk4hxW0Of2aWBizzdxyYpCKlMIuHRBqo3Tsw6nqICvRHfwVJ/exec'; // URL web app Apps Script (berakhiran /exec)
 const api=async(fn,...a)=>{
   let r;
   try{r=await fetch(API_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({fn,args:a})});r=await r.json()}
