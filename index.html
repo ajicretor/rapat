@@ -141,7 +141,7 @@ h1,h2,h3,button,th,.chip,.stat span,.bt em{font-weight:500!important}
 #docov .dtb button.b{margin:0}#docov .dtb button.s{color:#fff;border-color:rgba(255,255,255,.4)}
 #docov .dscroll{flex:1;overflow:auto;padding:16px 0 40px;-webkit-overflow-scrolling:touch}
 .dscale{width:794px;margin:0 auto}
-.pg{position:relative;width:210mm;min-height:296.5mm;margin:0 auto 18px;background:#fff;color:#0f1f16;padding:13mm 15mm 24mm;box-shadow:0 4px 24px rgba(0,0,0,.35);font:13.5px/1.6 "Poppins",system-ui,sans-serif;overflow:hidden;-webkit-print-color-adjust:exact;print-color-adjust:exact;text-align:left}
+.pg{position:relative;width:210mm;min-height:296.5mm;margin:0 auto 18px;background:#fff;color:#0f1f16;padding:12mm 15mm 22mm;box-shadow:0 4px 24px rgba(0,0,0,.35);font:13.5px/1.6 "Poppins",system-ui,sans-serif;overflow:hidden;-webkit-print-color-adjust:exact;print-color-adjust:exact;text-align:left}
 .pg.dr:before{content:"DRAF";position:absolute;top:44%;left:50%;transform:translate(-50%,-50%) rotate(-30deg);font-size:150px;font-weight:700!important;letter-spacing:10px;color:rgba(11,92,50,.07);pointer-events:none}
 .pg b{font-weight:600!important;color:inherit}
 .pg .lh{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
@@ -586,7 +586,7 @@ function docHTML(m,L){
   const info=[['Hari / Tanggal',hariTgl(m.start)],['Waktu',`${jam(m.start)} – ${jam(m.end)} WIB`],['Tempat',m.place||'–'],['Pimpinan rapat',L.pimpinan||'–'],['Notulis',L.notulis||'–'],
     ['Peserta hadir',`${H.length} orang${H.length&&H.length<=8?': '+nama.join(', '):''}${H.length>8?` (daftar lengkap pada Lampiran, halaman ${pAtt})`:''}`]];
   const poin=lns(L.poin),kep=lns(L.keputusan),tl=(L.tindak||[]).filter(r=>String(r.k||'').trim());
-  let h=`<div class="${cls}">${lhd()}<div class="bis">Bismillahirohmanirrohim</div><div class="lbl">Laporan Notulensi Rapat</div>
+  let h=`<div class="${cls}"><div class="p1">${lhd()}<div class="bis">Bismillahirohmanirrohim</div><div class="lbl">Laporan Notulensi Rapat</div>
   <div class="ttl">${esc(m.title)}<br>Bulan ${esc(bln)}</div><div class="no">Nomor: ${esc(L.nomor)}</div>
   <div class="ib">${info.map(i=>`<span>${i[0]}</span><b>${esc(i[1])}</b>`).join('')}</div>
   <div class="sh">I. Ringkasan</div>${paras(L.ringkasan)}
@@ -596,7 +596,7 @@ function docHTML(m,L){
   ${tl.length?tl.map((r,i)=>`<tr><td>${i+1}</td><td>${rich(r.k).replace(/\n/g,'<br>')}</td><td>${esc(r.pj||'–')}</td><td>${esc(r.t||'–')}</td></tr>`).join(''):'<tr><td>–</td><td>Tidak ada tindak lanjut.</td><td>–</td><td>–</td></tr>'}</table>
   <div class="sh">V. Penutup</div>${paras(L.penutup)}
   <div class="wl">Wallahul Muwaffiq Ila Aqwamith Thoriq</div>
-  <div class="sg"><div>Mengetahui,<br><b>Ketua Cabang</b>${qr()}<b>${esc(L.ketua||'–')}</b></div><div>Bogor, ${esc(tglP(m.start))}<br><b>Notulis</b>${qr()}<b>${esc(L.notulis||'–')}</b></div></div>
+  <div class="sg"><div>Mengetahui,<br><b>Ketua Cabang</b>${qr()}<b>${esc(L.ketua||'–')}</b></div><div>Bogor, ${esc(tglP(m.start))}<br><b>Notulis</b>${qr()}<b>${esc(L.notulis||'–')}</b></div></div></div>
   ${ft(0)}</div>`;
   const sub=extra=>`<div class="tag">${extra[0]}</div><div class="h2d">${esc(m.title)} – ${esc(bln)}</div><div class="sub">Nomor: ${esc(L.nomor)}</div><div class="sub">${esc(hariTgl(m.start))} · ${esc(m.place||'–')} · ${extra[1]}</div>`;
   dets.forEach((items,pi)=>{
@@ -620,9 +620,17 @@ function openDoc(m,L){
   closeDoc();
   const o=document.createElement('div');o.id='docov';o.dataset.t=L.nomor||'';
   o.innerHTML=`<div class="dtb"><button class="s b" onclick="closeDoc()">✕ Tutup</button><b>${L.terbit?'Dokumen resmi':'Pratinjau (draf)'}</b><button class="b" onclick="printDoc()">🖨 Cetak / PDF</button></div><div class="dscroll"><div class="dscale" id="dsc">${docHTML(m,L)}</div></div>`;
-  document.body.appendChild(o);document.body.style.overflow='hidden';fitDoc();drawDocQR();
+  document.body.appendChild(o);document.body.style.overflow='hidden';fitP1();fitDoc();drawDocQR();
 }
 function closeDoc(){const o=$('#docov');if(!o)return;o.remove();const n=$('#nav');document.body.style.overflow=n&&n.classList.contains('open')?'hidden':''}
+/* Halaman 1 selalu muat satu lembar A4: isi diperkecil otomatis bila terlalu panjang (minimal 78%) */
+function fitP1(){
+  const A4=296.5*96/25.4;
+  document.querySelectorAll('#docov .p1').forEach(e=>{
+    const cs=getComputedStyle(e.parentNode),av=A4-parseFloat(cs.paddingTop)-parseFloat(cs.paddingBottom);
+    e.style.zoom='';const h=e.offsetHeight;if(h>av)e.style.zoom=Math.max(.78,av/h);
+  });
+}
 const fitDoc=()=>{const e=$('#dsc');if(e)e.style.zoom=Math.min(1,(innerWidth-20)/794)};
 addEventListener('resize',fitDoc);
 function drawDocQR(){
