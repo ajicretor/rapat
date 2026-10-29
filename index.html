@@ -121,6 +121,83 @@ a{color:var(--ac);font-weight:700}
 .poster h2{font-size:24px}#qr{display:inline-block;background:#fff;padding:14px;border-radius:20px;margin-top:10px}
 *{font-weight:400!important}
 h1,h2,h3,button,th,.chip,.stat span,.bt em{font-weight:500!important}
+
+/* ---- Menu publik (Absen / Verifikasi) ---- */
+.pt{display:flex;gap:8px;margin:0 0 14px}
+.pt button{all:unset;cursor:pointer;flex:1;text-align:center;padding:10px 8px;border-radius:12px;border:1.5px solid var(--bd);background:var(--card);color:var(--mut);font-size:13px;font-weight:500!important}
+.pt button.on{background:var(--g);color:#fff;border-color:transparent}
+.chip.gr{background:var(--soft);color:var(--mut)}
+.kv{display:grid;grid-template-columns:130px minmax(0,1fr);gap:6px 12px;margin:12px 0}.kv span{color:var(--mut)}.kv b{font-weight:500!important;word-break:break-word}
+.card.vok{border-left:6px solid var(--ok)}.card.vno{border-left:6px solid var(--bad)}
+.lr{border:1.5px solid var(--bd);border-radius:16px;padding:12px;margin-bottom:10px;background:var(--bg)}
+.lr .row{margin-top:2px}.lr label:first-child{margin-top:0}
+.lsec{font-size:12px;font-weight:500!important;color:var(--ac);text-transform:uppercase;letter-spacing:1.2px;margin:20px 0 6px;border-bottom:1px solid var(--bd);padding-bottom:4px}
+@media(max-width:560px){.kv{grid-template-columns:1fr;gap:0}.kv span{margin-top:8px;font-size:12px}}
+
+/* ---- Dokumen laporan (kertas A4, selalu terang) ---- */
+#docov{position:fixed;inset:0;z-index:200;background:#4b5563;display:flex;flex-direction:column}
+#docov .dtb{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 14px;padding-top:calc(10px + env(safe-area-inset-top,0px));background:#0f2118;color:#fff}
+#docov .dtb b{font-size:13px;color:#fff;font-weight:500!important}
+#docov .dtb button.b{margin:0}#docov .dtb button.s{color:#fff;border-color:rgba(255,255,255,.4)}
+#docov .dscroll{flex:1;overflow:auto;padding:16px 0 40px;-webkit-overflow-scrolling:touch}
+.dscale{width:794px;margin:0 auto}
+.pg{position:relative;width:210mm;min-height:296.5mm;margin:0 auto 18px;background:#fff;color:#0f1f16;padding:13mm 15mm 24mm;box-shadow:0 4px 24px rgba(0,0,0,.35);font:13.5px/1.6 "Poppins",system-ui,sans-serif;overflow:hidden;-webkit-print-color-adjust:exact;print-color-adjust:exact;text-align:left}
+.pg.dr:before{content:"DRAF";position:absolute;top:44%;left:50%;transform:translate(-50%,-50%) rotate(-30deg);font-size:150px;font-weight:700!important;letter-spacing:10px;color:rgba(11,92,50,.07);pointer-events:none}
+.pg b{font-weight:600!important;color:inherit}
+.pg .lh{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+.pg .lh img{width:96px;height:auto;filter:none}
+.pg .lh .r{text-align:right}
+.pg .nm{font-family:"Times New Roman",Times,serif!important;font-weight:700!important;font-size:17px;line-height:1.18;text-transform:uppercase;letter-spacing:.2px;color:#0b1a12}
+.pg .ad{font-size:10.5px;line-height:1.5;color:#2a3b31;margin-top:6px}
+.pg .nm span{display:block}.pg .nm .n1{font-size:14.5px}.pg .nm .n2{font-size:20px;line-height:1.25}.pg .nm .n3{font-size:15.5px}.pg .lh img{margin-top:3px}.pg .ad{margin-top:8px}
+.pg .bis{text-align:center;font-style:italic;font-weight:600!important;color:#0b6b3a;font-size:15px;margin:22px 0 14px}
+.pg .lbl{text-align:center;font-size:10.5px;letter-spacing:3px;color:#4b5d52;font-weight:500!important;text-transform:uppercase}
+.pg .ttl{text-align:center;font-size:24px;line-height:1.25;font-weight:700!important;margin:6px 0 4px}
+.pg .no{text-align:center;color:#4b5d52;font-size:12px;margin-bottom:12px}
+.pg .ib{background:#edf5f0;border-radius:12px;padding:14px 20px;display:grid;grid-template-columns:118px minmax(0,1fr);gap:5px 6px;font-size:13.5px}
+.pg .ib span{color:#4b5d52}
+.pg .sh{display:flex;align-items:center;gap:10px;color:#0b5c32;font-size:11.5px;letter-spacing:1.6px;font-weight:700!important;text-transform:uppercase;margin:16px 0 6px}
+.pg .sh:after{content:"";flex:1;height:1px;background:#d3e3d9}
+.pg p{margin:0 0 6px}
+.pg ol,.pg ul{margin:0;padding-left:22px}.pg li{margin:1px 0}
+.pg table.dt{width:100%;border-collapse:collapse;font-size:13px;margin:0}
+.pg table.dt th{background:#0b5c32;color:#fff;font-weight:600!important;text-transform:none;font-size:12.5px;padding:9px 10px;text-align:left;border:0;white-space:normal;letter-spacing:0}
+.pg table.dt td{padding:9px 10px;border-bottom:1px solid #d9e6de;vertical-align:top;white-space:normal;color:#0f1f16;text-align:left}
+.pg table.dt tr{break-inside:avoid}
+.pg table.det{margin-top:14px}
+.pg table.det td{border:1px solid #d9e6de}
+.pg table.det td.sec{background:#e3f0e8;color:#0b5c32;font-weight:600!important;padding:8px 10px}
+.pg table.det td.c,.pg table.att td.c{text-align:center;color:#4b5d52}
+.pg .sm{font-size:12px;color:#4b5d52}
+.pg .chip2{display:inline-block;background:#fdf0c2;color:#6b4e00;font-size:11px;font-weight:600!important;padding:2px 10px;border-radius:99px;white-space:nowrap}
+.pg .wl{text-align:center;font-style:italic;font-weight:600!important;color:#0b6b3a;margin:16px 0 6px}
+.pg .sg{display:flex;justify-content:space-around;text-align:center;margin-top:16px;font-size:13px}
+.pg .sg>div{width:44%}
+.pg .qrs{width:78px;height:78px;margin:8px auto}
+.pg .qrs img,.pg .qrs canvas{width:78px!important;height:78px!important}
+.pg .qph{border:1px dashed #9fb3a7;color:#7a8c81;font-size:9px;line-height:1.3;display:flex;align-items:center;justify-content:center;text-align:center}
+.pg .tag{font-size:10.5px;letter-spacing:3px;color:#4b5d52;text-transform:uppercase;font-weight:500!important;margin-top:20px}
+.pg .h2d{font-size:22px;font-weight:700!important;line-height:1.25;margin:2px 0}
+.pg .sub{color:#4b5d52;font-size:12.5px;line-height:1.5}
+.pg .stt{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:14px 0}
+.pg .stt>div{background:#f2f7f4;border:1px solid #d3e3d9;border-radius:12px;padding:9px 14px}
+.pg .stt b{display:block;font-size:21px;line-height:1.2;color:#0b5c32;font-weight:700!important}
+.pg .stt span{font-size:12px;color:#4b5d52}
+.pg table.att tr.z td{background:#f2f7f4}
+.pg .fn{font-size:12px;color:#4b5d52;margin-top:10px}
+.pg .pf{position:absolute;left:15mm;right:15mm;bottom:9mm;border-top:1px solid #d9e6de;padding-top:8px;display:flex;justify-content:space-between;align-items:flex-end;font-size:10px;line-height:1.5;color:#5b6f63}
+.pg .pf b{color:#2a3b31}
+@page{size:A4;margin:0}
+@media print{
+  html,body{height:auto!important;overflow:visible!important;background:#fff!important}
+  body>*:not(#docov){display:none!important}
+  #docov{position:static!important;display:block!important;background:#fff!important}
+  #docov .dtb{display:none!important}
+  #docov .dscroll{overflow:visible!important;padding:0!important}
+  #dsc{zoom:1!important;width:auto!important}
+  .pg{margin:0!important;box-shadow:none!important;break-after:page;page-break-after:always}
+  .pg:last-child{break-after:auto;page-break-after:auto}
+}
 </style>
 </head>
 <body>
@@ -155,7 +232,7 @@ async function load(force){
     meetings=(d.meetings||[]).slice().sort((a,b)=>(b.start||'').localeCompare(a.start||''));
     loaded=true;loadErr='';
     if(force)render(true);
-    else if(changed&&!(isAdmin&&(tab==='rapat'||tab==='qr')))render(); // jangan timpa form yang sedang diisi admin
+    else if(changed&&!(isAdmin&&(tab==='rapat'||tab==='qr'||(tab==='laporan'&&lapEdit))))render(); // jangan timpa form yang sedang diisi admin
   }catch(e){if(!loaded){loadErr=errMsg(e);render(true)}}
 }
 const showLogin=()=>{loginOpen=true;render(true);scrollTo(0,0)};
@@ -179,24 +256,24 @@ function render(f){
   const a=document.activeElement;
   if(!f&&a&&/INPUT|TEXTAREA|SELECT/.test(a.tagName)){pending=true;return}
   pending=false;
-  if(!isAdmin)tab='absen';else if(!tab)tab='home';
+  if(!isAdmin){if(tab!=='verif')tab='absen'}else if(!tab)tab='home';
   $('#app').className='app '+(isAdmin?'adm':'mob');
-  const T=[['home','🏠 Dashboard'],['rapat','📅 Agenda rapat'],['hadir','✅ Kehadiran'],['qr','🔳 QR Code'],['absen','📱 Tampilan peserta']];
+  const T=[['home','🏠 Dashboard'],['rapat','📅 Agenda rapat'],['hadir','✅ Kehadiran'],['qr','🔳 QR Code'],['laporan','📄 Laporan notulensi'],['verif','🔍 Verifikasi dokumen'],['absen','📱 Tampilan peserta']];
   const BR=`<div class="brand"><img class="lg" src="${LOGO}" alt="GP Ansor"><div class="bt"><span>pimpinan cabang</span><em>GP Ansor</em><span>kabupaten bogor</span><small>absen rapat</small></div></div>`;
   const cur=(T.find(t=>t[0]===tab)||T[0])[1].replace(/^\S+\s/,'');
   $('#nav').innerHTML=isAdmin?`<div class="mbar"><button class="hb" aria-label="Buka menu" onclick="menu()"><span></span><span></span><span></span></button><b>${cur}</b><img src="${LOGO}" alt=""></div><div class="mi">${BR}`+T.map(t=>`<button class="${t[0]===tab?'on':''}" onclick="go('${t[0]}')">${t[1]}</button>`).join('')+`<button onclick="logout()">🚪 Keluar admin</button></div><div class="ov" onclick="menu(0)"></div>`:BR;
   $('#nav').style.cssText=isAdmin?'':'background:none;border:0;height:auto;position:static;padding:0'
   const v=$('#view');v.className=isAdmin&&tab==='absen'?'phone':'';
   if(!loaded)v.innerHTML=loadErr?`<div class="card">${esc(loadErr)}<br><br><button class="b" onclick="loadErr='';load(true)">Coba lagi</button></div>`:'<p class="mut">Memuat…</p>';
-  else v.innerHTML=(loginOpen&&!isAdmin)?vLogin():{home:vHome,absen:vAbsen,rapat:vRapat,hadir:vHadir,qr:vQR}[tab]();
+  else v.innerHTML=(loginOpen&&!isAdmin)?vLogin():{home:vHome,absen:vAbsen,rapat:vRapat,hadir:vHadir,qr:vQR,laporan:vLaporan,verif:vVerif}[tab]();
   if(loaded&&!(loginOpen&&!isAdmin)){if(tab==='qr')drawQR();if(tab==='absen')tgl()}
 }
 const liveList=()=>{const n=Date.now();return meetings.filter(m=>m.start&&m.end&&n>=new Date(m.start)-18e5&&n<=+new Date(m.end))};
 
 document.addEventListener('focusout',()=>setTimeout(()=>{if(pending)render()},250));
 const menu=o=>{const n=$('#nav');const open=o===undefined?!n.classList.contains('open'):!!o;n.classList.toggle('open',open);document.body.style.overflow=open?'hidden':''};
-addEventListener('keydown',e=>{if(e.key==='Escape')menu(0)});addEventListener('resize',()=>{if(innerWidth>=900)menu(0)});
-const go=t=>{menu(0);tab=t;render(true);scrollTo(0,0)};
+addEventListener('keydown',e=>{if(e.key==='Escape'){menu(0);closeDoc()}});addEventListener('resize',()=>{if(innerWidth>=900)menu(0)});
+const go=t=>{menu(0);tab=t;if(t!=='verif'&&location.hash)try{history.replaceState(null,'',location.pathname+location.search)}catch(e){}render(true);scrollTo(0,0)};
 const msg=(t,k='')=>{const e=$('#st');if(e)e.innerHTML=t?`<div class="msg ${k}">${t}</div>`:''};
 
 /* ---------- Dashboard admin ---------- */
@@ -262,7 +339,7 @@ function vHome(){
 /* ---------- Peserta (mobile) ---------- */
 function vAbsen(){
   const lv=liveList()[0],mine=atts.filter(a=>a.uid===uid).sort((a,b)=>b.ts.localeCompare(a.ts));
-  let h=`<div class="hero"><div class="hb"><img src="${LOGO}" alt=""></div><span class="chip ${lv?'':'off'}">${lv?'● Sedang berlangsung':'Belum ada rapat'}</span>
+  let h=(isAdmin?'':pubTabs())+`<div class="hero"><div class="hb"><img src="${LOGO}" alt=""></div><span class="chip ${lv?'':'off'}">${lv?'● Sedang berlangsung':'Belum ada rapat'}</span>
   <h2>${lv?esc(lv.title):'Assalamu’alaikum, Sahabat! 👋'}</h2><p>${lv?`📍 ${esc(lv.place||'')} · ${fmt(lv.start)}`:'Absen dibuka 30 menit sebelum rapat dimulai.'}</p></div>
   <div class="card"><label>Nama lengkap</label><input id="nm" value="${esc(ls.get('nm'))}" placeholder="Nama Sahabat" autocomplete="name">
   ${asalForm()}<label>Jabatan</label><input id="jb" list="jbl" value="${esc(ls.get('jb'))}" placeholder="Pilih atau ketik jabatan"><datalist id="jbl"><option>Ketua</option><option>Wakil Ketua</option><option>Sekretaris</option><option>Wakil Sekretaris</option><option>Bendahara</option><option>Wakil Bendahara</option><option>Ketua Bidang</option><option>Anggota Bidang</option><option>Ketua PAC</option><option>Anggota</option></datalist>
@@ -272,7 +349,7 @@ function vAbsen(){
     h+='<h3>Riwayat &amp; notulensi</h3>';
     h+=mine.map(a=>{const m=meetings.find(x=>x.id===a.meetingId)||{};
       return `<div class="tk"><b>${esc(a.meetingTitle)}</b><div class="mut">${fmt(a.ts)} · ${esc(m.place||'')}${a.lat!=null?` · <a href="https://www.google.com/maps?q=${a.lat},${a.lng}" target="_blank" rel="noopener">peta</a>`:''}</div>
-      ${m.published&&m.summary?`<details open><summary>📝 Notulensi</summary><pre>${esc(m.summary)}</pre></details>`:'<div class="mut">Notulensi muncul di sini setelah dikirim panitia.</div>'}</div>`}).join('');
+      ${m.published&&splitSum(m.summary).text?`<details open><summary>📝 Notulensi</summary><pre>${esc(splitSum(m.summary).text)}</pre></details>`:'<div class="mut">Notulensi muncul di sini setelah dikirim panitia.</div>'}${(l=>l&&l.terbit?`<button class="s b" style="margin-top:8px" onclick="viewPub('${m.id}')">📄 Laporan resmi (cetak / PDF)</button>`:'')(splitSum(m.summary).lap)}</div>`}).join('');
   }
   if(!isAdmin)h+='<p class="mut" style="text-align:center;margin-top:18px"><a href="#" onclick="showLogin();return false">Masuk admin</a></p>';
   return h;
@@ -352,7 +429,7 @@ function noteCard(m){
     </div>
     <div>
       <div class="stp"><i>3</i><span>Periksa &amp; edit notulensi</span></div>
-      <textarea id="sm" placeholder="Hasil ringkasan AI muncul di sini. Boleh diedit.">${esc(m.summary)}</textarea>
+      <textarea id="sm" placeholder="Hasil ringkasan AI muncul di sini. Boleh diedit.">${esc(splitSum(m.summary).text)}</textarea>
       <div class="stp"><i>4</i><span>Simpan &amp; kirim</span></div>
       <div class="acts"><button class="s b" onclick="saveNote(false)">Simpan draf</button><button class="b" onclick="saveNote(true)">Simpan &amp; kirim ke peserta</button></div>
     </div>
@@ -387,8 +464,8 @@ async function gen(){
   const b2=$('#gb');if(b2){b2.disabled=false;b2.textContent='✨ Buat ringkasan AI'}
 }
 async function saveNote(pub){
-  const d={transcript:$('#tr').value,summary:$('#sm').value};
-  if(pub){if(!d.summary.trim())return msg('Notulensi masih kosong.','e');d.published=true}
+  const m0=meetings.find(x=>x.id===sel)||{};const d={transcript:$('#tr').value,summary:$('#sm').value};
+  if(pub){if(!d.summary.trim())return msg('Notulensi masih kosong.','e');d.published=true}d.summary=joinSum(d.summary,getLap(m0));
   msg(pub?'Menyimpan & mengirim… (WhatsApp otomatis bisa memakan waktu)':'Menyimpan…');
   try{
     const o=await adm('saveNote',sel,d,pub);await load(false);
@@ -436,8 +513,240 @@ function drawQR(){
 }
 async function saveLink(v){cfg.link=v.trim();try{await adm('saveConfig',cfg.link)}catch(e){msg('Gagal menyimpan tautan.','e')}render(true)}
 
+/* ---------- Laporan notulensi resmi & verifikasi dokumen ---------- */
+const NOMOR_KODE='PC-IX-22'; // bagian tetap pada nomor dokumen: 012/PC-IX-22/NR-01/X/2026
+/* Data laporan disimpan di kolom "summary" rapat sebagai penanda [[LAPORAN:...]] di akhir teks,
+   sehingga tidak perlu mengubah backend Apps Script. Teks notulensi biasa tetap bersih (penanda disaring). */
+const MK=/\s*\[\[LAPORAN:([A-Za-z0-9_\-]+)\]\]\s*$/;
+const splitSum=s=>{s=String(s||'');const x=s.match(MK);if(!x)return{text:s,lap:null};let lap=null;try{lap=JSON.parse(decodeURIComponent(escape(atob(x[1].replace(/-/g,'+').replace(/_/g,'/')))))}catch(e){}return{text:s.replace(MK,''),lap}};
+const joinSum=(t,lap)=>{t=String(t||'').replace(MK,'').trimEnd();if(!lap)return t;const b=btoa(unescape(encodeURIComponent(JSON.stringify(lap)))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');return t+'\n\n[[LAPORAN:'+b+']]'};
+const bk=()=>{try{return JSON.parse(ls.get('lapbk')||'{}')}catch(e){return{}}};
+const setBk=(id,L)=>{const o=bk();o[id]=L;ls.set('lapbk',JSON.stringify(o))};
+const getLap=m=>splitSum(m.summary).lap||bk()[m.id]||null;
+
+let LD=null,lapEdit=null,vq='',vres;
+const ROM=['','I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII'];
+const pad=(n,l=2)=>String(n).padStart(l,'0');
+const jam=d=>{const x=new Date(d);return isNaN(x)?'–':pad(x.getHours())+'.'+pad(x.getMinutes())};
+const tglP=d=>new Date(d).toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'});
+const hariTgl=d=>new Date(d).toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+const blnThn=d=>new Date(d).toLocaleDateString('id-ID',{month:'long',year:'numeric'});
+const durasi=m=>{const k=Math.max(0,Math.round((new Date(m.end)-new Date(m.start))/6e4)),h=Math.floor(k/60),r=k%60;return(h?h+' jam':'')+(h&&r?' ':'')+(r?r+' menit':'')||'0 menit'};
+const lns=s=>String(s||'').split(/\r?\n/).map(x=>x.trim()).filter(Boolean);
+const rich=s=>esc(s).replace(/(https?:\/\/[^\s<]+)/g,'<b>$1</b>');
+const paras=s=>String(s||'').split(/\n\s*\n/).map(x=>x.trim()).filter(Boolean).map(x=>`<p>${rich(x).replace(/\n/g,'<br>')}</p>`).join('')||'<p>–</p>';
+const normV=s=>String(s||'').toUpperCase().replace(/[^A-Z0-9]/g,'');
+const baseUrl=()=>(cfg.link||appUrl||location.href).split('#')[0];
+const verifURL=k=>baseUrl()+'#verifikasi/'+k;
+const hostOf=()=>{try{return new URL(baseUrl()).host}catch(e){return baseUrl()}};
+const liveHadir=m=>atts.filter(a=>a.meetingId===m.id).sort((x,y)=>String(x.ts).localeCompare(String(y.ts))).map(a=>({nama:a.name,jab:a.jabatan||'–',asal:asal(a)==='-'?'–':asal(a),waktu:tm(a.ts)}));
+function genKode(){
+  const A='ABCDEFGHJKLMNPQRSTUVWXYZ23456789',used=new Set(meetings.map(m=>{const l=splitSum(m.summary).lap;return l&&l.kode}).filter(Boolean));
+  for(;;){const b=new Uint8Array(8);crypto.getRandomValues(b);const s=[...b].map(x=>A[x%32]).join(''),k=s.slice(0,4)+'-'+s.slice(4);if(!used.has(k))return k}
+}
+function autoNomor(m){
+  const d=new Date(m.start),y=d.getFullYear(),mo=d.getMonth();
+  const yr=meetings.filter(x=>x.start&&new Date(x.start).getFullYear()===y).sort((a,b)=>a.start.localeCompare(b.start));
+  const bl=yr.filter(x=>new Date(x.start).getMonth()===mo);
+  return `${pad(yr.findIndex(x=>x.id===m.id)+1,3)}/${NOMOR_KODE}/NR-${pad(bl.findIndex(x=>x.id===m.id)+1)}/${ROM[mo+1]}/${y}`;
+}
+function lapDefault(m){
+  const ket=liveHadir(m).find(h=>/^ketua$/i.test(h.jab));
+  return{nomor:autoNomor(m),kode:'',terbit:'',pimpinan:ket?ket.nama:'',notulis:ls.get('notulis'),ketua:ls.get('ketua')||'Dhamiry A Ghazaly, S.H.',
+    ringkasan:splitSum(m.summary).text,poin:'',keputusan:'',tindak:[{k:'',pj:'',t:''}],penutup:`Rapat ditutup pada pukul ${jam(m.end)} WIB.`,
+    detail:[{sec:'Pembukaan',waktu:jam(m.start),nama:ket?ket.nama:'',jab:'Pimpinan rapat',isi:'Rapat dibuka.',ket:''},
+            {sec:'Pembahasan',waktu:'',nama:'',jab:'',isi:'',ket:''},
+            {sec:'Penutup',waktu:jam(m.end),nama:ket?ket.nama:'',jab:'Pimpinan rapat',isi:`Rapat ditutup pada pukul ${jam(m.end)} WIB.`,ket:''}]};
+}
+
+/* ----- Dokumen A4 (3+ halaman) ----- */
+const lhd=()=>`<div class="lh"><img src="${LOGO}" alt=""><div class="r"><div class="nm"><span class="n1">Pimpinan Cabang</span><span class="n2">Gerakan Pemuda Ansor</span><span class="n3">Kabupaten Bogor</span></div><div class="ad">Jl.Bina Citra No.05 Kel Tengah Kec. Cibinong Kab. Bogor<br>Website : ansorbogoronline.or.id, | email : ansorbogoronline@gmail.com</div></div></div>`;
+function chunkDet(rows){
+  rows=(rows||[]).filter(r=>r&&(String(r.isi||'').trim()||String(r.nama||'').trim()||String(r.waktu||'').trim()));
+  const hasSec=rows.some(r=>String(r.sec||'').trim()),pages=[];let cur=[],w=0,last=null,secNo=0;
+  rows.forEach((r,i)=>{
+    const sec=String(r.sec||'').trim();let hdr=null;
+    if(hasSec&&sec!==last){secNo++;hdr=secNo+' · '+(sec||'Lainnya')}
+    last=sec;
+    const wt=1+Math.floor(String(r.isi||'').length/75)*.45,need=wt+(hdr?.7:0);
+    if(cur.length&&w+need>9){pages.push(cur);cur=[];w=0;if(hasSec&&!hdr)hdr=secNo+' · '+(sec||'Lainnya')+' (lanjutan)'}
+    if(hdr){cur.push({h:hdr});w+=.7}
+    cur.push({r,no:i+1});w+=wt;
+  });
+  if(cur.length||!pages.length)pages.push(cur);
+  return pages;
+}
+function chunkAtt(H){const p=[];let i=0,cap=14;while(i<H.length){p.push(H.slice(i,i+cap));i+=cap;cap=20}return p.length?p:[[]]}
+function docHTML(m,L){
+  const H=L.terbit&&L.hadir?L.hadir:liveHadir(m),dr=!L.terbit,kode=L.kode||'',link=kode?verifURL(kode):'';
+  const dets=chunkDet(L.detail),atps=chunkAtt(H),N=1+dets.length+atps.length,pAtt=2+dets.length,cls=dr?'pg dr':'pg',bln=blnThn(m.start);
+  const ft=n=>`<div class="pf"><div>Nomor verifikasi dokumen: <b>${kode?esc(kode):'belum diterbitkan'}</b>${n?`<br>Validasi dokumen: <b>${esc(hostOf())}</b>`:''}</div>${n?`<div>Halaman ${n} dari ${N}</div>`:''}</div>`;
+  const qr=()=>link?`<div class="qrs" data-q="${esc(link)}"></div>`:'<div class="qrs qph">QR muncul<br>setelah terbit</div>';
+  const nama=H.map(a=>a.nama);
+  const info=[['Hari / Tanggal',hariTgl(m.start)],['Waktu',`${jam(m.start)} – ${jam(m.end)} WIB`],['Tempat',m.place||'–'],['Pimpinan rapat',L.pimpinan||'–'],['Notulis',L.notulis||'–'],
+    ['Peserta hadir',`${H.length} orang${H.length&&H.length<=8?': '+nama.join(', '):''}${H.length>8?` (daftar lengkap pada Lampiran, halaman ${pAtt})`:''}`]];
+  const poin=lns(L.poin),kep=lns(L.keputusan),tl=(L.tindak||[]).filter(r=>String(r.k||'').trim());
+  let h=`<div class="${cls}">${lhd()}<div class="bis">Bismillahirohmanirrohim</div><div class="lbl">Laporan Notulensi Rapat</div>
+  <div class="ttl">${esc(m.title)}<br>Bulan ${esc(bln)}</div><div class="no">Nomor: ${esc(L.nomor)}</div>
+  <div class="ib">${info.map(i=>`<span>${i[0]}</span><b>${esc(i[1])}</b>`).join('')}</div>
+  <div class="sh">I. Ringkasan</div>${paras(L.ringkasan)}
+  <div class="sh">II. Poin pembahasan</div>${poin.length?'<ol>'+poin.map(x=>`<li>${rich(x)}</li>`).join('')+'</ol>':'<p>–</p>'}
+  <div class="sh">III. Keputusan</div>${kep.length?'<ul>'+kep.map(x=>`<li>${rich(x)}</li>`).join('')+'</ul>':'<p>–</p>'}
+  <div class="sh">IV. Tindak lanjut</div><table class="dt"><tr><th style="width:44px">No</th><th>Kegiatan</th><th style="width:150px">Penanggung jawab</th><th style="width:130px">Tenggat</th></tr>
+  ${tl.length?tl.map((r,i)=>`<tr><td>${i+1}</td><td>${rich(r.k).replace(/\n/g,'<br>')}</td><td>${esc(r.pj||'–')}</td><td>${esc(r.t||'–')}</td></tr>`).join(''):'<tr><td>–</td><td>Tidak ada tindak lanjut.</td><td>–</td><td>–</td></tr>'}</table>
+  <div class="sh">V. Penutup</div>${paras(L.penutup)}
+  <div class="wl">Wallahul Muwaffiq Ila Aqwamith Thoriq</div>
+  <div class="sg"><div>Mengetahui,<br><b>Ketua Cabang</b>${qr()}<b>${esc(L.ketua||'–')}</b></div><div>Bogor, ${esc(tglP(m.start))}<br><b>Notulis</b>${qr()}<b>${esc(L.notulis||'–')}</b></div></div>
+  ${ft(0)}</div>`;
+  const sub=extra=>`<div class="tag">${extra[0]}</div><div class="h2d">${esc(m.title)} – ${esc(bln)}</div><div class="sub">Nomor: ${esc(L.nomor)}</div><div class="sub">${esc(hariTgl(m.start))} · ${esc(m.place||'–')} · ${extra[1]}</div>`;
+  dets.forEach((items,pi)=>{
+    h+=`<div class="${cls}">${lhd()}${sub(['Lampiran · Detail jalannya rapat','Notulis: '+esc(L.notulis||'–')])}
+    <table class="dt det"><tr><th style="width:44px">No</th><th style="width:66px">Waktu</th><th style="width:150px">Pembicara</th><th>Isi pembicaraan</th><th style="width:96px">Keterangan</th></tr>
+    ${items.length?items.map(i=>i.h?`<tr><td class="sec" colspan="5">${esc(i.h)}</td></tr>`:`<tr><td class="c">${i.no}</td><td>${esc(i.r.waktu||'–')}</td><td><b>${esc(i.r.nama||'–')}</b>${i.r.jab?`<div class="sm">${esc(i.r.jab)}</div>`:''}</td><td>${rich(i.r.isi||'').replace(/\n/g,'<br>')}</td><td>${i.r.ket?`<span class="chip2">${esc(i.r.ket)}</span>`:'–'}</td></tr>`).join(''):'<tr><td colspan="5">Belum ada rincian jalannya rapat.</td></tr>'}</table>${ft(2+pi)}</div>`;
+  });
+  let off=0;
+  atps.forEach((rows,pi)=>{
+    h+=`<div class="${cls}">${lhd()}${sub(['Lampiran · Daftar hadir peserta','Absen dibuka 30 menit sebelum rapat'])}`;
+    if(pi===0)h+=`<div class="stt"><div><b>${H.length}</b><span>Total hadir</span></div><div><b>${jam(m.start)}</b><span>Mulai (WIB)</span></div><div><b>${jam(m.end)}</b><span>Selesai (WIB)</span></div><div><b>${esc(durasi(m))}</b><span>Durasi rapat</span></div></div>`;
+    h+=`<table class="dt att" style="${pi?'margin-top:14px':''}"><tr><th style="width:44px">No</th><th>Nama</th><th>Jabatan</th><th>Asal (tingkat)</th><th style="width:70px">Waktu hadir</th></tr>
+    ${rows.length?rows.map((a,i)=>`<tr class="${(off+i)%2?'z':''}"><td class="c">${off+i+1}</td><td><b>${esc(a.nama)}</b></td><td>${esc(a.jab)}</td><td>${esc(a.asal)}</td><td>${esc(a.waktu)}</td></tr>`).join(''):'<tr><td colspan="5">Belum ada peserta yang absen.</td></tr>'}</table>`;
+    off+=rows.length;
+    if(pi===atps.length-1)h+='<div class="fn">Daftar disusun urut waktu hadir dan berlanjut otomatis ke halaman berikutnya bila peserta banyak. Kehadiran dicatat lewat sistem Absen Rapat dengan verifikasi lokasi.</div>';
+    h+=`${ft(2+dets.length+pi)}</div>`;
+  });
+  return h;
+}
+function openDoc(m,L){
+  closeDoc();
+  const o=document.createElement('div');o.id='docov';o.dataset.t=L.nomor||'';
+  o.innerHTML=`<div class="dtb"><button class="s b" onclick="closeDoc()">✕ Tutup</button><b>${L.terbit?'Dokumen resmi':'Pratinjau (draf)'}</b><button class="b" onclick="printDoc()">🖨 Cetak / PDF</button></div><div class="dscroll"><div class="dscale" id="dsc">${docHTML(m,L)}</div></div>`;
+  document.body.appendChild(o);document.body.style.overflow='hidden';fitDoc();drawDocQR();
+}
+function closeDoc(){const o=$('#docov');if(!o)return;o.remove();const n=$('#nav');document.body.style.overflow=n&&n.classList.contains('open')?'hidden':''}
+const fitDoc=()=>{const e=$('#dsc');if(e)e.style.zoom=Math.min(1,(innerWidth-20)/794)};
+addEventListener('resize',fitDoc);
+function drawDocQR(){
+  if(typeof QRCode==='undefined')return;
+  document.querySelectorAll('#docov .qrs[data-q]').forEach(e=>{e.innerHTML='';new QRCode(e,{text:e.dataset.q,width:156,height:156,correctLevel:QRCode.CorrectLevel.M})});
+}
+function printDoc(){
+  const o=$('#docov'),t=document.title;
+  document.title='Laporan Notulensi '+((o&&o.dataset.t)||'').replace(/\//g,'-');
+  window.onafterprint=()=>{document.title=t;window.onafterprint=null};
+  try{window.print()}catch(e){document.title=t;alert('Cetak tidak tersedia di tampilan ini. Buka halaman langsung di browser, lalu pilih Cetak > Simpan sebagai PDF.')}
+}
+const viewPub=id=>{const m=meetings.find(x=>x.id===id),l=m&&splitSum(m.summary).lap;if(l&&l.terbit)openDoc(m,l)};
+const viewLap=id=>{const m=meetings.find(x=>x.id===id);if(m)openDoc(m,Object.assign(lapDefault(m),getLap(m)||{}))};
+async function copyLink(id){const m=meetings.find(x=>x.id===id),l=m&&getLap(m);if(!l||!l.kode)return;const u=verifURL(l.kode);try{await navigator.clipboard.writeText(u);alert('Tautan verifikasi disalin:\n'+u)}catch(e){prompt('Salin tautan verifikasi:',u)}}
+
+/* ----- Admin: daftar & editor laporan ----- */
+function vLaporan(){
+  if(lapEdit&&LD)return vLapEdit();
+  const list=meetings.map(m=>{
+    const lap=getLap(m),sy=splitSum(m.summary).lap,n=atts.filter(a=>a.meetingId===m.id).length;
+    const st=lap&&lap.terbit?`<span class="chip">✔ Terbit · ${esc(lap.kode)}</span>`:`<span class="chip gr">${lap?'Draf':'Belum disusun'}</span>`;
+    return `<div class="card"><div class="row"><div><b>${esc(m.title)}</b><div class="mut">${fmt(m.start)} · ${esc(m.place||'')} · ${n} hadir</div>${lap?`<div class="mut">No. ${esc(lap.nomor)}</div>`:''}<div style="margin-top:6px">${st}</div>
+    ${lap&&lap.terbit&&!sy?'<div class="msg e">⚠ Tanda verifikasi belum tersimpan di server. Buka laporan lalu klik Simpan perubahan.</div>':''}</div>
+    <div><button class="b" onclick="openLap('${m.id}')">${lap?'Ubah laporan':'Susun laporan'}</button><button class="s b" onclick="viewLap('${m.id}')">🖨 Lihat / cetak</button>${lap&&lap.terbit?`<button class="s b" onclick="copyLink('${m.id}')">🔗 Tautan verifikasi</button>`:''}</div></div></div>`}).join('')||'<p class="mut">Belum ada agenda rapat.</p>';
+  return `<h1>Laporan notulensi</h1><p class="mut">Susun laporan resmi 3 halaman (ringkasan, detail jalannya rapat, daftar hadir), terbitkan agar mendapat nomor verifikasi, lalu cetak atau simpan sebagai PDF.</p><br>${list}`;
+}
+function openLap(id){
+  const m=meetings.find(x=>x.id===id);if(!m)return;
+  LD=JSON.parse(JSON.stringify(Object.assign(lapDefault(m),getLap(m)||{})));lapEdit=id;render(true);scrollTo(0,0);
+}
+const lrow=(a,i,k,v)=>{LD[a][i][k]=v};
+function ladd(a){
+  if(a==='tindak')LD.tindak.push({k:'',pj:'',t:''});
+  else{const d=LD.detail,r={sec:(d[d.length-1]||{}).sec||'',waktu:'',nama:'',jab:'',isi:'',ket:''};
+    if(d.length&&/^penutup$/i.test(String(d[d.length-1].sec||'').trim())){r.sec=(d[d.length-2]||{}).sec||'';d.splice(d.length-1,0,r)}else d.push(r)}
+  render(true);
+}
+const ldel=(a,i)=>{LD[a].splice(i,1);render(true)};
+const lmove=(a,i,d)=>{const x=LD[a],j=i+d;if(j<0||j>=x.length)return;[x[i],x[j]]=[x[j],x[i]];render(true)};
+const previewLap=()=>{const m=meetings.find(x=>x.id===lapEdit);if(m)openDoc(m,LD)};
+function vLapEdit(){
+  const m=meetings.find(x=>x.id===lapEdit),L=LD;
+  if(!m){lapEdit=null;LD=null;return vLaporan()}
+  const f=(lab,k,ph)=>`<label>${lab}</label><input value="${esc(L[k])}" placeholder="${esc(ph||'')}" oninput="LD.${k}=this.value">`;
+  const ta=(lab,k,ph,hh)=>`<label>${lab}</label><textarea style="min-height:${hh||90}px" placeholder="${esc(ph||'')}" oninput="LD.${k}=this.value">${esc(L[k])}</textarea>`;
+  const tin=L.tindak.map((r,i)=>`<div class="lr"><label>Kegiatan</label><textarea style="min-height:60px" oninput="lrow('tindak',${i},'k',this.value)">${esc(r.k)}</textarea>
+    <div class="g2"><div><label>Penanggung jawab</label><input value="${esc(r.pj)}" oninput="lrow('tindak',${i},'pj',this.value)"></div><div><label>Tenggat</label><input value="${esc(r.t)}" oninput="lrow('tindak',${i},'t',this.value)"></div></div>
+    <button class="d s b" onclick="ldel('tindak',${i})">Hapus baris</button></div>`).join('');
+  const det=L.detail.map((r,i)=>`<div class="lr"><div class="g2"><div><label>Bagian</label><input list="secl" value="${esc(r.sec)}" oninput="lrow('detail',${i},'sec',this.value)"></div><div><label>Waktu</label><input value="${esc(r.waktu)}" placeholder="16.00" oninput="lrow('detail',${i},'waktu',this.value)"></div></div>
+    <div class="g2"><div><label>Pembicara</label><input value="${esc(r.nama)}" oninput="lrow('detail',${i},'nama',this.value)"></div><div><label>Jabatan / peran</label><input value="${esc(r.jab)}" placeholder="Pimpinan rapat, Pelapor…" oninput="lrow('detail',${i},'jab',this.value)"></div></div>
+    <label>Isi pembicaraan</label><textarea style="min-height:70px" oninput="lrow('detail',${i},'isi',this.value)">${esc(r.isi)}</textarea>
+    <label>Keterangan</label><select onchange="lrow('detail',${i},'ket',this.value)">${[['','–'],['Keputusan','Keputusan'],['Catatan','Catatan'],['Tindak lanjut','Tindak lanjut']].map(o=>`<option value="${o[0]}" ${o[0]===(r.ket||'')?'selected':''}>${o[1]}</option>`).join('')}</select>
+    <div class="acts"><button class="s b" onclick="lmove('detail',${i},-1)">↑</button><button class="s b" onclick="lmove('detail',${i},1)">↓</button><button class="d s b" onclick="ldel('detail',${i})">Hapus baris</button></div></div>`).join('');
+  const hd=liveHadir(m).length;
+  return `<button class="s b" onclick="lapEdit=null;LD=null;render(true)">← Kembali</button><br><br><h1>Laporan: ${esc(m.title)}</h1>
+  <p class="mut">${fmt(m.start)} · ${esc(m.place||'')} · ${hd} peserta hadir (daftar hadir diambil otomatis dari absen).</p>
+  ${L.terbit?`<div class="msg o"><b>Terbit.</b> Nomor verifikasi: <b>${esc(L.kode)}</b><br><span class="mut">Perubahan yang disimpan akan langsung berlaku pada dokumen dengan nomor verifikasi ini.</span></div>`:''}
+  <div style="max-width:780px"><div class="lsec">Identitas dokumen</div>
+  ${f('Nomor dokumen','nomor','012/PC-IX-22/NR-01/X/2026')}${f('Pimpinan rapat','pimpinan','Nama pimpinan rapat')}${f('Notulis','notulis','Nama, gelar')}${f('Ketua cabang (penandatangan)','ketua')}
+  <div class="lsec">Isi laporan</div>
+  ${ta('I. Ringkasan','ringkasan','Ringkasan hasil rapat. Pisahkan paragraf dengan baris kosong.',130)}
+  ${ta('II. Poin pembahasan (satu poin per baris)','poin','Evaluasi pendaftaran kaderisasi\nLaporan jumlah pendaftar',100)}
+  ${ta('III. Keputusan (satu keputusan per baris)','keputusan','Pendaftaran dilanjutkan sampai akhir masa pendaftaran',100)}
+  <label>IV. Tindak lanjut</label>${tin}<button class="s b" onclick="ladd('tindak')">＋ Tambah tindak lanjut</button><br><br>
+  ${ta('V. Penutup','penutup','',60)}
+  <div class="lsec">Lampiran: detail jalannya rapat</div>
+  <datalist id="secl"><option>Pembukaan</option><option>Pembahasan</option><option>Penutup</option></datalist>
+  ${det}<button class="s b" onclick="ladd('detail')">＋ Tambah baris pembicaraan</button>
+  <div class="lsec">Simpan</div>
+  <div class="acts"><button class="s b" onclick="previewLap()">👁 Pratinjau</button>${L.terbit?'<button class="b" onclick="saveLap(true)">Simpan perubahan</button>':'<button class="s b" onclick="saveLap(false)">Simpan draf</button><button class="b" onclick="saveLap(true)">Terbitkan dokumen</button>'}</div>
+  <div id="st"></div><p class="mut">Menerbitkan dokumen membuat nomor verifikasi unik dan menyimpan daftar hadir saat itu. Nomor ini tercetak di setiap halaman dan pada QR tanda tangan.</p></div>`;
+}
+async function saveLap(terbit){
+  const m=meetings.find(x=>x.id===lapEdit);if(!m)return;
+  const L=JSON.parse(JSON.stringify(LD)),was=!!L.terbit;
+  if(!String(L.nomor||'').trim())return msg('Isi nomor dokumen dulu ya.','e');
+  if(!String(L.notulis||'').trim()||!String(L.ketua||'').trim())return msg('Nama notulis dan ketua cabang wajib diisi.','e');
+  if(terbit&&!was){L.kode=genKode();L.terbit=new Date().toISOString()}
+  if(L.terbit){L.hadir=liveHadir(m);if(was)L.diubah=new Date().toISOString()}
+  const s=joinSum(splitSum(m.summary).text,L);
+  if(s.length>45000)return msg('Dokumen terlalu besar untuk disimpan (batas sel Google Sheets). Kurangi isi atau jumlah baris.','e');
+  ls.set('notulis',L.notulis);ls.set('ketua',L.ketua);msg('Menyimpan…');
+  try{
+    await adm('saveNote',m.id,{transcript:m.transcript||'',summary:s},false);
+    setBk(m.id,L);LD=L;await load(false);
+    const m2=meetings.find(x=>x.id===m.id),ok=m2&&splitSum(m2.summary).lap;
+    render(true);
+    if(!ok)return msg('Tersimpan di perangkat ini, tetapi server tidak mengembalikan data laporan. Verifikasi publik belum dapat bekerja; periksa backend Apps Script.','e');
+    msg(terbit&&!was?`Dokumen diterbitkan. Nomor verifikasi: <b>${esc(L.kode)}</b>`:(L.terbit?'Perubahan tersimpan.':'Draf tersimpan.'),'o');
+  }catch(e){msg('Gagal: '+esc(errMsg(e)),'e')}
+}
+
+/* ----- Verifikasi dokumen (publik & admin) ----- */
+const pubTabs=()=>`<div class="pt"><button class="${tab==='absen'?'on':''}" onclick="go('absen')">📱 Absen rapat</button><button class="${tab==='verif'?'on':''}" onclick="go('verif')">🔍 Verifikasi dokumen</button></div>`;
+function doVerify(){
+  const el=$('#vq');if(el)vq=el.value;
+  let q=String(vq||'').trim();const x=q.split(/verifikasi[\/=]/i);if(x.length>1)q=x.pop();
+  const n=normV(q);vres=undefined;
+  if(n){vres=null;for(const m of meetings){const l=splitSum(m.summary).lap;if(l&&l.terbit&&(normV(l.kode)===n||normV(l.nomor)===n)){vres={m,l};break}}}
+  render(true);
+}
+const viewVerif=()=>{if(vres)openDoc(vres.m,vres.l)};
+function vVerif(){
+  const head=isAdmin?'<h1>Verifikasi dokumen</h1><p class="mut">Periksa keaslian laporan notulensi rapat.</p><br>'
+    :`${pubTabs()}<div class="hero"><div class="hb"><img src="${LOGO}" alt=""></div><span class="chip">Verifikasi</span><h2>Verifikasi dokumen</h2><p>Periksa keaslian laporan notulensi rapat PC GP Ansor Kabupaten Bogor.</p></div>`;
+  let r='';
+  if(vres===null)r=`<div class="card vno"><h3>❌ Dokumen tidak ditemukan</h3><p class="mut">Nomor <b>${esc(vq)}</b> tidak terdaftar sebagai dokumen resmi. Periksa kembali penulisan nomor verifikasi pada bagian bawah dokumen, atau hubungi sekretariat PC GP Ansor Kabupaten Bogor.</p></div>`;
+  else if(vres){
+    const{m,l}=vres,H=l.hadir||[];
+    r=`<div class="card vok"><h3>✅ Dokumen terverifikasi</h3><p class="mut">Dokumen ini terdaftar resmi di sistem PC GP Ansor Kabupaten Bogor.</p>
+    <div class="kv"><span>Judul</span><b>${esc(m.title)}</b><span>Nomor dokumen</span><b>${esc(l.nomor)}</b><span>No. verifikasi</span><b>${esc(l.kode)}</b><span>Hari / tanggal</span><b>${esc(hariTgl(m.start))}</b><span>Waktu</span><b>${jam(m.start)} – ${jam(m.end)} WIB</b><span>Tempat</span><b>${esc(m.place||'–')}</b>
+    <span>Pimpinan rapat</span><b>${esc(l.pimpinan||'–')}</b><span>Notulis</span><b>${esc(l.notulis||'–')}</b><span>Ketua cabang</span><b>${esc(l.ketua||'–')}</b><span>Peserta hadir</span><b>${H.length} orang</b><span>Diterbitkan</span><b>${fmt(l.terbit)}</b>${l.diubah?`<span>Diperbarui</span><b>${fmt(l.diubah)}</b>`:''}</div>
+    <button class="b" onclick="viewVerif()">📄 Tampilkan dokumen</button></div>`;
+  }
+  return head+`<div class="card"><label>Nomor verifikasi dokumen</label><input id="vq" value="${esc(vq)}" placeholder="Contoh: 7KQ2-M9XA" autocapitalize="characters" autocomplete="off" spellcheck="false" onkeydown="if(event.key==='Enter')doVerify()">
+  <button class="b big" onclick="doVerify()">Periksa dokumen</button><p class="mut">Nomor verifikasi tercetak di bagian bawah setiap halaman dokumen. Nomor dokumen (mis. 012/PC-IX-22/NR-01/X/2026) juga dapat dipakai. Memindai QR pada kolom tanda tangan akan membuka halaman ini otomatis.</p></div>${r}`;
+}
+
 /* ---------- Init ---------- */
-load(true);
+const hashV=()=>{const x=location.hash.match(/^#verifikasi[\/=]?(.*)$/i);if(!x)return null;try{return decodeURIComponent(x[1]||'')}catch(e){return x[1]||''}};
+{const q=hashV();if(q!==null){tab='verif';vq=q}}
+load(true).then(()=>{if(vq&&tab==='verif')doVerify()});
+addEventListener('hashchange',()=>{const q=hashV();if(q!==null){tab='verif';vq=q;if(loaded)doVerify()}});
 setInterval(()=>{if(!document.hidden&&isAdmin)load(false)},15000);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)load(false)});
 render(true);
