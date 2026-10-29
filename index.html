@@ -204,19 +204,18 @@ const KEC=['Babakan Madang','Bojonggede','Caringin','Cariu','Ciampea','Ciawi','C
 const asal=a=>a.tingkat&&a.tingkat!=='PC'?a.tingkat+' '+(a.kecamatan||'')+(a.desa?' · '+a.desa:''):(a.tingkat||'-');
 function asalForm(){
   const L=liveList(),pac=L.some(m=>m.invPAC),rt=L.some(m=>m.invRanting);
-  if(!pac&&!rt)return '';
   const t=ls.get('tk'),kc=ls.get('kc');
-  const o=[['PC','PC (Pengurus Cabang)']].concat(pac?[['PAC','PAC (tingkat kecamatan)']]:[],rt?[['Ranting','Ranting (tingkat desa)']]:[]);
+  const o=[['PC','PC (Pengurus Cabang)'],['PAC','PAC (tingkat kecamatan)'],['Ranting','Ranting (tingkat desa)']];
   return `<label>Tingkat</label><select id="tk" onchange="tgl()">${o.map(x=>`<option value="${x[0]}" ${x[0]===t?'selected':''}>${x[1]}</option>`).join('')}</select>
-  <div id="kcw"><label>Kecamatan</label><select id="kc" onchange="tgl()"><option value="">Pilih kecamatan</option>${KEC.map(k=>`<option ${k===kc?'selected':''}>${k}</option>`).join('')}</select></div>
+  <div id="kcw"><label>Kecamatan <span class="mut">(wajib untuk PAC &amp; Ranting)</span></label><select id="kc" onchange="tgl()"><option value="">Pilih kecamatan</option>${KEC.map(k=>`<option ${k===kc?'selected':''}>${k}</option>`).join('')}</select></div>
   <div id="dsw"><label>Desa / Kelurahan</label><input id="ds" list="dsl" value="${esc(ls.get('ds'))}" placeholder="Nama desa"><datalist id="dsl"></datalist></div>`;
 }
 function tgl(){
   const t=$('#tk');if(!t)return;const k=$('#kc'),v=t.value;
-  $('#kcw').style.display=v==='PC'?'none':'';$('#dsw').style.display=v==='Ranting'?'':'none';
+  $('#kcw').style.display='';$('#dsw').style.display=v==='Ranting'?'':'none';
   const dl=$('#dsl');if(dl&&k)dl.innerHTML=(desaMap[k.value]||[]).map(d=>`<option value="${esc(d)}">`).join('');
 }
-const kcHtml=L=>{const o={};L.forEach(a=>{if(a.kecamatan)o[a.kecamatan]=(o[a.kecamatan]||0)+1});const d=Object.entries(o).sort((x,y)=>y[1]-x[1]).map(e=>({l:e[0],v:e[1]}));return d.length?'<h3 style="margin-top:16px">Peserta per kecamatan (PAC &amp; Ranting)</h3>'+hbars(d):''};
+const kcHtml=L=>{const o={};L.forEach(a=>{if(a.kecamatan)o[a.kecamatan]=(o[a.kecamatan]||0)+1});const d=Object.entries(o).sort((x,y)=>y[1]-x[1]).map(e=>({l:e[0],v:e[1]}));return d.length?'<h3 style="margin-top:16px">Peserta per kecamatan</h3>'+hbars(d):''};
 const tm=d=>new Date(d).toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'});
 const bar=(d,h=150)=>{const W=340,mx=Math.max(1,...d.map(x=>x.v)),bw=W/Math.max(d.length,1),base=h+8;return `<svg class="ch" viewBox="0 0 ${W} ${h+34}">`+d.map((x,i)=>{const bh=x.v/mx*(h-14),X=i*bw+bw*.18,cx=X+bw*.32;return `<g><title>${esc(x.t||x.l)}: ${x.v}</title><rect x="${X}" y="${base-bh}" width="${bw*.64}" height="${bh}" rx="5" fill="var(--ac)"/><text x="${cx}" y="${base-bh-4}" text-anchor="middle" font-size="11" font-weight="700" fill="var(--tx)">${x.v}</text><text x="${cx}" y="${h+24}" text-anchor="middle" font-size="10" fill="var(--mut)">${esc(x.l)}</text></g>`}).join('')+'</svg>'};
 const hbars=d=>{const mx=Math.max(1,...d.map(x=>x.v));return d.map(x=>`<div class="hbar"><span>${esc(x.l)}</span><div class="trk"><i style="width:${x.v/mx*100}%"></i></div><b>${x.v}</b></div>`).join('')||'<p class="mut">Belum ada data.</p>'};
@@ -293,7 +292,7 @@ async function checkin(){
   const pos=await getPos();
   msg('Mencatat kehadiran…');
   let r;
-  try{r=await api('checkin',{name,uid,jabatan:jb,tingkat:tk,kecamatan:tk==='PC'?'':kc,desa:tk==='Ranting'?ds:'',phone:ph,lat:pos?pos.lat:null,lng:pos?pos.lng:null,acc:pos?pos.acc:null})}
+  try{r=await api('checkin',{name,uid,jabatan:jb,tingkat:tk,kecamatan:kc,desa:tk==='Ranting'?ds:'',phone:ph,lat:pos?pos.lat:null,lng:pos?pos.lng:null,acc:pos?pos.acc:null})}
   catch(e){const b=$('#cb');if(b)b.disabled=false;return msg('Gagal menyimpan: '+esc(errMsg(e)),'e')}
   const b=$('#cb');if(b)b.disabled=false;
   if(!r||!r.ok)return msg(esc((r&&r.msg)||'Gagal mencatat kehadiran.'),r&&r.dup?'o':'e');
@@ -313,7 +312,7 @@ function vRapat(){
   <label>Tempat</label><input id="pl" value="${esc(e.place)}" placeholder="Sekretariat PC GP Ansor Kab. Bogor">
   <div class="g2"><div><label>Latitude</label><input id="la" value="${esc(e.lat??'')}"></div><div><label>Longitude</label><input id="lo" value="${esc(e.lng??'')}"></div></div>
   <label>Radius valid (meter)</label><input id="ra" type="number" value="${esc(e.radius||150)}">
-  <label>Peserta yang diundang</label><label class="ck"><input type="checkbox" id="ipac" ${e.invPAC?'checked':''}> Undang PAC (tingkat kecamatan)</label><label class="ck"><input type="checkbox" id="irt" ${e.invRanting?'checked':''}> Undang Ranting (tingkat desa)</label><p class="mut">Jika PAC atau Ranting diundang, form absen otomatis meminta tingkat, kecamatan, dan desa.</p>
+  <label>Peserta yang diundang</label><label class="ck"><input type="checkbox" id="ipac" ${e.invPAC?'checked':''}> Undang PAC (tingkat kecamatan)</label><label class="ck"><input type="checkbox" id="irt" ${e.invRanting?'checked':''}> Undang Ranting (tingkat desa)</label><p class="mut">Form absen selalu menampilkan tingkat, kecamatan, dan desa.</p>
   <button class="s b" onclick="useMyLoc()">📍 Pakai lokasi saya</button>
   <button class="b" onclick="saveMeeting()">Simpan</button>${e.id?'<button class="s b" onclick="editing=null;render(true)">Batal</button>':''}
   <div id="st"></div><p class="mut">Koordinat kosong = validasi hanya berdasarkan waktu.</p></div>`;
